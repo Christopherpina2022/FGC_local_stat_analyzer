@@ -10,20 +10,21 @@ class GraphQLClient:
         if token:
             self.headers["Authorization"] = f"Bearer {token}"
 
-    def execute(self, query: str, variables: dict | None = None) -> dict:
-        response = requests.post(
-            self.url,
-            json={
-                "query": query,
-                "variables": variables
-            },
-            headers=self.headers
-        )
+    def fetch_tournament_info(client, query):
+        page = 1
+        all_nodes = []
 
-        response.raise_for_status()
-        result = response.json()
+        # First request
+        data = client.execute(query, {"page": page})
 
-        if "errors" in result:
-            raise Exception(result["errors"])
+        tournaments = data["tournaments"]
+        total_pages = tournaments["pageInfo"]["totalPages"]
 
-        return result["data"]
+        all_nodes.extend(tournaments["nodes"])
+
+        # Remaining pages
+        for page in range(2, total_pages + 1):
+            data = client.execute(query, {"page": page})
+            all_nodes.extend(data["tournaments"]["nodes"])
+
+        return all_nodes
