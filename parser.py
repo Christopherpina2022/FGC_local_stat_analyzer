@@ -10,7 +10,7 @@ def parse_top8(tournaments: list[dict]) -> list[Result]:
     results = []
 
     for tournament in tournaments:
-        for event in tournament["events"]:
+        for event in tournament.get("events") or []:
             standings = event["standings"]["nodes"]
 
             for standing in standings:
