@@ -1,32 +1,28 @@
 from dataclasses import dataclass
 
 @dataclass
-class User:
-    id: int
+class Result:
+    player_id: int
     gamerTag: str
     placement: int
 
-def parse_tournament(data: dict) -> list[Result]:
+def parse_top8(tournaments: list[dict]) -> list[Result]:
     results = []
 
-    tournament = data["tournament"]
+    for tournament in tournaments:
+        for event in tournament["events"]:
+            standings = event["standings"]["nodes"]
 
-    for event in tournament["events"]:
-        standings = event["standings"]["nodes"]
-
-        for standing in standings:
-            placement = standing["placement"]
-            participants = standing["entrant"]["participants"]
-
-            for p in participants:
-                player = p["player"]
+            for standing in standings:
+                player = standing.get("player")
+                if not player:
+                    continue
 
                 results.append(
-                    User(
-                        player_id=player["id"],
-                        gamer_tag=player["gamerTag"],
-                        placement=placement
-                    )
+                    Result(
+                        player_id = player["id"],
+                        gamerTag = player["gamerTag"],
+                        placement = standing["standing"]
+                    )   
                 )
-
     return results
