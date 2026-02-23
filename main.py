@@ -25,23 +25,36 @@ def cli():
     pass
 
 @cli.command()
-def top8():
+@click.option("--perpage", default = 25, help="Number of tournaments to request at a time.")
+def top8(perpage):
     print("Running Top 8 Analytics...")
     client = GraphQLClient(ENDPOINT_URL, API_KEY)
-    top8_nodes = client.fetch_tournament_info(TOP_8)
+    top8_nodes = client.fetch_tournament_info(TOP_8, perpage)
+
+    # Stop running if the query Failed
+    if not top8_nodes:
+        print("use the above error to determine if the perpage parameter is too high (see --help)")
+        return None
     top8_results = Parser.parse_top8(top8_nodes)
     top8_stats = Analytics.compute_Top8(top8_results)
     Exporter.export_top8(top8_stats)
     print("Top 8 data has been exported.")
 
 @cli.command()
-def headcount():
+@click.option("--perpage", default = 25, help="Number of tournaments to request at a time.")
+def headcount(perpage):
     print("Running Headcount Analytics...")
     client = GraphQLClient(ENDPOINT_URL, API_KEY)
-    headcount_nodes = client.fetch_tournament_info(HEADCOUNT)
+    headcount_nodes = client.fetch_tournament_info(HEADCOUNT, perpage)
+
+    # Stop running if the query Failed
+    if not headcount_nodes:
+        print("use the above error to determine if the perpage parameter is too high (see --help)")
+        return None
     headcount_results = Parser.parse_headcount(headcount_nodes)
     headcount_stats = Analytics.compute_headcount(headcount_results)
     Exporter.export_headcount(headcount_stats)
+    print("Headcount data has been exported.")
 
 if __name__ == "__main__":
     cli()

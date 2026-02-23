@@ -1,7 +1,7 @@
 TOP_8 = """
-query TournamentTop8($page: Int!) {
+query TournamentTop8($page: Int!, $perPage: Int!) {
   tournaments(
-    query: {perPage: 30, page: $page, filter: {name: "Crossover", addrState: "KS"}, sortBy: "startAt desc"}
+    query: {perPage: $perPage, page: $page, filter: {name: "Crossover", addrState: "KS"}, sortBy: "startAt desc"}
   ) {
     pageInfo {
       totalPages

@@ -16,7 +16,6 @@ class Exporter:
             ])
 
             # Overall players
-
             overall_sorted = sorted(
                 stats["overall"],
                 key=lambda p: p["top8"],
@@ -64,17 +63,9 @@ class Exporter:
                         placements.get(7, 0),
                         placements.get(8, 0)
                     ])
-
-        print(f"CSV exported successfully to {filename}")
     
     @staticmethod
     def export_headcount(stats, filename="headcount.csv"):
-        """
-        Exports headcount stats to CSV.
-        Layout:
-        - Overall first with header
-        - Then each game with its own header
-        """
 
         with open(filename, "w", newline="", encoding="utf-8") as file:
             writer = csv.writer(file)
@@ -90,7 +81,7 @@ class Exporter:
             for player in sorted_overall:
                 writer.writerow([player["gamerTag"], player["attendance"]])
 
-            writer.writerow([])  # blank line
+            writer.writerow([])
 
             # Per Game
             for game, players in stats["by_game"].items():
@@ -104,4 +95,4 @@ class Exporter:
                 for player in sorted_players:
                     writer.writerow([player["gamerTag"], player["attendance"]])
 
-                writer.writerow([])  # blank line after each game
+                writer.writerow([])

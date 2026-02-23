@@ -17,6 +17,9 @@ In your virtual environemnt run this:
 * top8 - gets a list of players that were in the Top 8 standings
 * headcount - counts every user who attended the tournament and how many times
 
+### Arguments
+* --perpage [AMOUNT] - how many tournaments you want to pass per page to reduce complexity amount
+
 ## Handing API restrictions
 The Start.gg API has two main restrictions:
 * Maximum 80 Requests per minute
