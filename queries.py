@@ -14,8 +14,8 @@ query TournamentTop8($page: Int!) {
         standings(query: {perPage: 8}) {
           nodes {
             player {
-              id
               gamerTag
+              id
             }
             standing
           }

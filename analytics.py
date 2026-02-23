@@ -1,9 +1,8 @@
 from collections import defaultdict
 
-def computePlayerStats(results):
+def computeTop8Stats(results):
     stats = defaultdict(lambda: {
         "gamerTag": "",
-        "attended": 0,
         "top8": 0,
         "placements": defaultdict(int)
     })
@@ -12,7 +11,6 @@ def computePlayerStats(results):
         player = stats[result.player_id]
 
         player["gamerTag"] = result.gamerTag
-        player["attended"] += 1
         player["placements"][result.placement] += 1
 
         if result.placement <= 8:
