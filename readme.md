@@ -1,4 +1,4 @@
-# WFGC Headcounter
+# FGC Local Stat Analyzer
 This app is designed to send requests to the Start.gg API to look for attendees of *Crossover ICT* to create two main Queries:
 *  How many times each user has attended a Crossover ICT Tournament
 * Every placement a user has gotten up to the Top 8 standings
