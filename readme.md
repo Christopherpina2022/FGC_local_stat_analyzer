@@ -13,8 +13,9 @@ This app is designed to send requests to the Start.gg API to look for attendees 
 In your virtual environemnt run this:
 `python main.py [COMMAND]`
 
-The only available command right now is top8, but you can run --help to see all commands
-
+### Available Commands
+* top8 - gets a list of players that were in the Top 8 standings
+* headcount - counts every user who attended the tournament and how many times
 
 ## Handing API restrictions
 The Start.gg API has two main restrictions:

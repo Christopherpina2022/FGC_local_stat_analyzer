@@ -1,7 +1,9 @@
 import csv
 from pathlib import Path
 class Exporter:
-    def export_top8_stats(stats, filename="player_stats.csv"):
+
+    @staticmethod
+    def export_top8(stats, filename="player_stats.csv"):
         with open(filename, "w", newline="", encoding="utf-8") as file:
             writer = csv.writer(file)
 
@@ -41,28 +43,41 @@ class Exporter:
 
         print("CSV exported successfully.")
     
-    def export_headcount_stats(stats, filename="player_stats.csv"):
+    @staticmethod
+    def export_headcount(stats, filename="headcount.csv"):
+        """
+        Exports headcount stats to CSV.
+        Layout:
+        - Overall first with header
+        - Then each game with its own header
+        """
+
         with open(filename, "w", newline="", encoding="utf-8") as file:
             writer = csv.writer(file)
 
-            # Header
-            writer.writerow([
-                "gamerTag",
-                "Times attended",
-            ])
+            # Overall
+            writer.writerow(["Overall Attendance"])
+            writer.writerow(["gamerTag", "attendance"])
 
-            sorted_players = sorted(
-                stats.items(),
-                key=lambda item: item[1]["top8"],
-                reverse=True
+            # Sort overall by attendance descending
+            sorted_overall = sorted(
+                stats["overall"], key=lambda x: x["attendance"], reverse=True
             )
+            for player in sorted_overall:
+                writer.writerow([player["gamerTag"], player["attendance"]])
 
-            for player_id, data in sorted_players:
-                placements = data["placements"]
+            writer.writerow([])  # blank line
 
-                writer.writerow([
-                    data["gamerTag"],
-                    # TODO: write times attended
-                ])
+            # Per Game
+            for game, players in stats["by_game"].items():
+                writer.writerow([f"Game: {game}"])
+                writer.writerow(["gamerTag", "attendance"])
 
-        print("CSV exported successfully.")
+                # Sort players by attendance descending
+                sorted_players = sorted(
+                    players, key=lambda x: x["attendance"], reverse=True
+                )
+                for player in sorted_players:
+                    writer.writerow([player["gamerTag"], player["attendance"]])
+
+                writer.writerow([])  # blank line after each game

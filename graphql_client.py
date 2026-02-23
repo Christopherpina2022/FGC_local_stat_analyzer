@@ -10,23 +10,16 @@ class GraphQLClient:
         if token:
             self.headers["Authorization"] = f"Bearer {token}"
     
-    def execute(self, query: str, variables: dict | None = None) -> dict:
-        response = requests.post(
-            self.url,
-            json={
-                "query": query,
-                "variables": variables or {}
-            },
-            headers=self.headers
-        )
+    def execute(self, query, variables=None):
+        payload = {"query": query, "variables": variables or {}}
+        response = requests.post(self.url, json=payload, headers=self.headers)
+        data = response.json()
 
-        response.raise_for_status()
-        result = response.json()
+        if "errors" in data:
+            print("GraphQL errors:", data["errors"])
+            return None
 
-        if "errors" in result:
-            raise Exception(result["errors"])
-
-        return result["data"]
+        return data.get("data")
 
     def fetch_tournament_info(client, query):
         page = 1

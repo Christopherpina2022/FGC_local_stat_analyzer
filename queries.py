@@ -7,13 +7,13 @@ query TournamentTop8($page: Int!) {
       totalPages
     }
     nodes {
+    name
       events {
         name
         standings(query: {perPage: 8}) {
           nodes {
             player {
               gamerTag
-              id
             }
             standing
           }
@@ -27,18 +27,20 @@ query TournamentTop8($page: Int!) {
 HEADCOUNT = """
 query TournamentHeadCount($page: Int!) {
   tournaments(
-    query: {perPage: 30, page: $page, filter: {name: "Crossover", addrState: "KS"}, sortBy: "startAt desc"}
+    query: {perPage: 25, page: $page, filter: {name: "Crossover", addrState: "KS"}, sortBy: "startAt desc"}
   ) {
     pageInfo {
       totalPages
     }
     nodes {
+      id
       events {
-        name
+        videogame {
+          name
+        }
         entrants(query: {perPage: 50}) {
           nodes {
             participants {
-              id
               gamerTag
             }
           }

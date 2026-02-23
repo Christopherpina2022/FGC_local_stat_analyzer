@@ -31,7 +31,7 @@ def top8():
     top8_nodes = client.fetch_tournament_info(TOP_8)
     top8_results = Parser.parse_top8(top8_nodes)
     top8_stats = Analytics.compute_Top8(top8_results)
-    Exporter.export_top8_stats(top8_stats)
+    Exporter.export_top8(top8_stats)
     print("Top 8 data has been exported.")
 
 @cli.command()
@@ -40,8 +40,8 @@ def headcount():
     client = GraphQLClient(ENDPOINT_URL, API_KEY)
     headcount_nodes = client.fetch_tournament_info(HEADCOUNT)
     headcount_results = Parser.parse_headcount(headcount_nodes)
-    #headcount_stats = Analytics.compute_headcount(headcount_results)
-    #Exporter.export_headcount_stats(headcount_stats)
+    headcount_stats = Analytics.compute_headcount(headcount_results)
+    Exporter.export_headcount(headcount_stats)
 
 if __name__ == "__main__":
     cli()

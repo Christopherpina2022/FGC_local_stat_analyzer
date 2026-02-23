@@ -2,16 +2,15 @@ from dataclasses import dataclass
 
 @dataclass
 class top8_Result:
-    player_id: int
     gamerTag: str
     placement: int
     game: str
 
 @dataclass
 class headcount_Result:
-    player_id: int
     gamerTag: str
     game: str
+    tournament_id: int
 
 class Parser:
     @staticmethod
@@ -20,7 +19,7 @@ class Parser:
 
         for tournament in tournaments:
             for event in tournament.get("events") or []:
-                gameName = event.get("name")
+                gameName = (event.get("videogame")).get("name")
                 standings = (event.get("standings") or {}).get("nodes") or []
 
                 for standing in standings:
@@ -30,7 +29,6 @@ class Parser:
 
                     results.append(
                         top8_Result(
-                            player_id = player["id"],
                             gamerTag = player["gamerTag"],
                             placement = standing["standing"],
                             game = gameName
@@ -38,25 +36,24 @@ class Parser:
                     )
         return results
     
+    @staticmethod
     def parse_headcount(tournaments: list[dict]) -> list[headcount_Result]:
         results = []
 
         for tournament in tournaments:
+            tournament_id = tournament.get("name")
             for event in tournament.get("events") or []:
-                gameName = event.get("name")
-
+                gameName = event.get("videogame").get("name")
                 entrants = (event.get("entrants") or {}).get("nodes") or []
 
                 for entrant in entrants:
-                    gamerTag = entrant.get("gamerTag")
-                    if not gamerTag:
-                        continue
-                
-                    results.append(
-                        headcount_Result(
-                            player_id = entrant["id"],
-                            gamerTag = gamerTag,
-                            game = gameName
+                    for participant in entrant["participants"]:
+                        results.append(
+                            headcount_Result(
+                                gamerTag = participant.get("gamerTag"),
+                                game = gameName,
+                                tournament_id = tournament_id
+                            )
                         )
-                    )
+        return results
                 
