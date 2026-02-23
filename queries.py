@@ -7,8 +7,6 @@ query TournamentTop8($page: Int!) {
       totalPages
     }
     nodes {
-      name
-      slug
       events {
         name
         standings(query: {perPage: 8}) {
@@ -35,13 +33,12 @@ query TournamentHeadCount($page: Int!) {
       totalPages
     }
     nodes {
-      name
-      slug
       events {
         name
         entrants(query: {perPage: 50}) {
           nodes {
             participants {
+              id
               gamerTag
             }
           }

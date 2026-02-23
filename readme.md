@@ -22,6 +22,3 @@ The Start.gg API has two main restrictions:
 * Maximum 1000 complexity (objects that are returned including nested objects)
 
 each query will return a smaller page of data that will then be concatenated into a larger data dictionary to help reduce the requests made, but if the number of participants are too high which caps the complexity amount, you will need to reduce the number of tournaments to query (for Crossover ICT, the sweet spot is 25 tournaments per page). sometimes a tournament has so many entries that it's not possible to meet this requirement in one run, so as a solution, the data you request will be cached into a CSV file of results.
-
-### The Start/End Date parameter
-Feature will be included later to explain how to use.
