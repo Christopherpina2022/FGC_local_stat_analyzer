@@ -11,7 +11,7 @@ This app is designed to send requests to the Start.gg API to look for attendees 
 
 ## Execution
 In your virtual environemnt run this:
-`python main.py [COMMAND]`
+`python main.py [COMMAND] [ARGUMENT (optional)]`
 
 ### Available Commands
 * top8 - gets a list of players that were in the Top 8 standings
