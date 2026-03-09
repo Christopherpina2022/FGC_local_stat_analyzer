@@ -50,3 +50,33 @@ query TournamentHeadCount($page: Int!, $perPage: Int!, $tournamentName: String, 
   }
 }
 """
+
+USERINFO = """
+query TournamentGetUser($tournamentName: String, $stateCode: String, $tag: String) {
+  tournaments(
+    query: {perPage: 1, sortBy: "startAt desc", filter: {name: $tournamentName, addrState: $stateCode}}
+  ) {
+    nodes {
+      name
+      events {
+        name
+        entrants(query: {filter: {name: $tag}, perPage: 1}) {
+          nodes {
+            participants {
+              gamerTag
+              player {
+                user {
+                  name
+                  bio
+                  genderPronoun
+                  birthday
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+"""
