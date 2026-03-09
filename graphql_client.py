@@ -38,7 +38,6 @@ class GraphQLClient:
 
             tournaments = data["tournaments"]
             total_pages = tournaments["pageInfo"]["totalPages"]
-            print(f"Total pages being requested: {total_pages}")
 
             all_nodes.extend(tournaments["nodes"])
 
