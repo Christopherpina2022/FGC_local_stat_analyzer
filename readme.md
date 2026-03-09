@@ -13,12 +13,13 @@ overall results first then below will print out the results by game.
 3. setup Python Environment then run the requirements.txt to get dependencies. Python version used was *Python 3.13.11*. 
 
 ## Execution
-In your virtual environemnt run this:
+In your virtual environment, run this:
 `python main.py [Command] [Tournament Name] [State Code] (Optional Arguments)`
 
 ### Commands
 * top8 - gets a list of players that were in the Top 8 standings
 * headcount - counts every user who attended the tournament and how many times
+* getattendees - looks for generic info about every attendee in the most recent tournament
 
 ### Optional Arguments
 * --perpage [AMOUNT] - how many tournaments you want to pass per page to reduce complexity amount
