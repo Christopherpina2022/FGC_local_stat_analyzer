@@ -21,7 +21,7 @@ class GraphQLClient:
 
         return data.get("data")
 
-    def fetch_tournament_info(client, query, perpage, tournament_name, state_code, single=False):
+    def fetch_tournament_info(client, query, perpage, tournament_name, state_code, start, end):
         page = 1
         all_nodes = []
 
@@ -32,7 +32,9 @@ class GraphQLClient:
                 {"page": page, 
                  "perPage": perpage, 
                  "tournamentName": tournament_name,
-                 "stateCode" : state_code
+                 "stateCode" : state_code,
+                 "startDate" : start,
+                 "endDate" : end
                 }
             )
 
@@ -42,19 +44,41 @@ class GraphQLClient:
             all_nodes.extend(tournaments["nodes"])
 
             # Remaining pages
-            if not single:
-                for page in range(2, total_pages + 1):
-                    data = client.execute(
-                        query, 
-                        {"page": page, 
-                        "perPage": perpage, 
-                        "tournamentName": tournament_name,
-                        "stateCode" : state_code
-                        }
-                    )
-                    if not data:
-                        return None
-                    all_nodes.extend(data["tournaments"]["nodes"])
+            for page in range(2, total_pages + 1):
+                data = client.execute(
+                    query, 
+                    {"page": page, 
+                    "perPage": perpage, 
+                    "tournamentName": tournament_name,
+                    "stateCode" : state_code
+                    }
+                )
+                if not data:
+                    return None
+                all_nodes.extend(data["tournaments"]["nodes"])
+
+            return all_nodes
+        except Exception as e:
+            print(e)
+            return None
+    
+    def fetch_tournament_attendees(client, query, perpage, tournament_name, state_code):
+        page = 1
+        all_nodes = []
+
+        try:
+            data = client.execute(
+                query, 
+                {"page": page, 
+                 "perPage": perpage, 
+                 "tournamentName": tournament_name,
+                 "stateCode" : state_code,
+                }
+            )
+
+            tournaments = data["tournaments"]
+
+            all_nodes.extend(tournaments["nodes"])
 
             return all_nodes
         except Exception as e:

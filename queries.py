@@ -1,7 +1,7 @@
 TOP_8 = """
-query TournamentTop8($page: Int!, $perPage: Int!, $tournamentName: String!, $stateCode: String!) {
+query TournamentTop8($page: Int!, $perPage: Int!, $tournamentName: String!, $stateCode: String!, $startDate: Timestamp, $endDate: Timestamp) {
   tournaments(
-    query: {perPage: $perPage, page: $page, filter: {name: $tournamentName, addrState: $stateCode}, sortBy: "startAt desc"}
+    query: {perPage: $perPage, page: $page, filter: {name: $tournamentName, addrState: $stateCode, beforeDate: $endDate, afterDate: $startDate}, sortBy: "startAt desc"}
   ) {
     pageInfo {
       totalPages
@@ -26,9 +26,9 @@ query TournamentTop8($page: Int!, $perPage: Int!, $tournamentName: String!, $sta
 """
 
 HEADCOUNT = """
-query TournamentHeadCount($page: Int!, $perPage: Int!, $tournamentName: String, $stateCode: String) {
+query TournamentHeadCount($page: Int!, $perPage: Int!, $tournamentName: String!, $stateCode: String!, $startDate: Timestamp, $endDate: Timestamp) {
   tournaments(
-    query: {perPage: $perPage, page: $page, filter: {name: $tournamentName, addrState: $stateCode}, sortBy: "startAt desc"}
+    query: {perPage: $perPage, page: $page, filter: {name: $tournamentName, addrState: $stateCode, beforeDate: $endDate, afterDate: $startDate}, sortBy: "startAt desc"}
   ) {
     pageInfo {
       totalPages
