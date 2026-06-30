@@ -10,7 +10,7 @@ overall results first then below will print out the results by game.
 ## Setup
 1. Go to [This page and follow the instructions](https://developer.start.gg/docs/authentication) to get an API key from the start.gg Developer portal.
 2. Setup your .env file to include the [Endpoint](https://developer.start.gg/docs/sending-requests) and the API Key you got from step 1. keys should be "API_KEY" and "ENDPOINT_URL"
-3. setup Python Environment then run the requirements.txt to get dependencies. Python version used was *Python 3.13.11*. 
+3. setup Python Environment then run `pip install -r requirements.txt`. Python version used was *Python 3.13.11*. 
 
 ## Execution
 In your virtual environment, run this:
@@ -23,6 +23,7 @@ In your virtual environment, run this:
 
 ### Optional Arguments
 * --perpage [AMOUNT] - how many tournaments you want to pass per page to reduce complexity amount
+* --append - appends to current file instead of overwriting
 
 ## Handing API restrictions
 The Start.gg API has two main restrictions:
