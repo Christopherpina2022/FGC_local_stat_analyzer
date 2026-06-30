@@ -16,14 +16,16 @@ overall results first then below will print out the results by game.
 In your virtual environment, run this:
 `python main.py [Command] [Tournament Name] [State Code] (Optional Arguments)`
 
-### Commands
+### Commands and Arguments
 * top8 - gets a list of players that were in the Top 8 standings
 * headcount - counts every user who attended the tournament and how many times
 * getattendees - looks for generic info about every attendee in the most recent tournament
 
 ### Optional Arguments
 * --perpage [AMOUNT] - how many tournaments you want to pass per page to reduce complexity amount
-* --append - appends to current file instead of overwriting
+* --start [YYYY-MM-DD] - date filter (only used for top8 and headcount)
+* --end [YYYY-MM-DD] - date filter (only used for top8 and headcount)
+* --ytd - fast date filter that only selects results from January 1st of current year to today's date
 
 ## Handing API restrictions
 The Start.gg API has two main restrictions:
