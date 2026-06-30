@@ -27,10 +27,13 @@ def cli():
 @click.option("--perpage", default = 25, help = "Number of tournaments to request at a time. [Defaults to 25]")
 @click.option("--start", required=False, help="Start date (YYYY-MM-DD)")
 @click.option("--end", required=False, help="End date (YYYY-MM-DD)")
+@click.option("--ytd", is_flag=True, required=False, help="Automatically filters from January 1st of current year to today's date")
 @click.argument("tournament_name")
 @click.argument("state_code")
-def top8(perpage, tournament_name, state_code, start, end):
+
+def top8(perpage, tournament_name, state_code, start, end, ytd):
     print("Running Top 8 Analytics...")
+
     # Convert timestamps to Unix Timestamp (if applicable)
     start_unix = None
     end_unix = None
@@ -38,6 +41,12 @@ def top8(perpage, tournament_name, state_code, start, end):
         start_unix = int(datetime.strptime(start, "%Y-%m-%d").timestamp())
     if end:
         end_unix = int(datetime.strptime(end, "%Y-%m-%d").timestamp())
+    if ytd:
+        now = datetime.now()
+        yearStart = datetime(now.year, 1, 1)
+
+        start_unix = int(yearStart.timestamp())
+        end_unix = int(now.timestamp())
     
     # Run client
     client = GraphQLClient(ENDPOINT_URL, API_KEY)
@@ -56,10 +65,13 @@ def top8(perpage, tournament_name, state_code, start, end):
 @click.option("--perpage", default = 25, help="Number of tournaments to request at a time.")
 @click.option("--start", required=False, help="Start date (YYYY-MM-DD)")
 @click.option("--end", required=False, help="End date (YYYY-MM-DD)")
+@click.option("--ytd", is_flag=True, required=False, help="Automatically filters from January 1st of current year to today's date")
 @click.argument("tournament_name")
 @click.argument("state_code")
-def headcount(perpage, tournament_name, state_code, start, end):
+
+def headcount(perpage, tournament_name, state_code, start, end, ytd):
     print("Running Headcount Analytics...")
+
     # Convert timestamps to Unix Timestamp (if applicable)
     start_unix = None
     end_unix = None
@@ -67,6 +79,12 @@ def headcount(perpage, tournament_name, state_code, start, end):
         start_unix = int(datetime.strptime(start, "%Y-%m-%d").timestamp())
     if end:
         end_unix = int(datetime.strptime(end, "%Y-%m-%d").timestamp())
+    if ytd:
+        now = datetime.now()
+        yearStart = datetime(now.year, 1, 1)
+
+        start_unix = int(yearStart.timestamp())
+        end_unix = int(now.timestamp())
 
     # Run client
     client = GraphQLClient(ENDPOINT_URL, API_KEY)
